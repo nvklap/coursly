@@ -1,0 +1,13 @@
+export { CourseForm } from './CourseForm/CourseForm';
+export { AuthorsList } from './CourseForm/AuthorsList';
+export { Courses } from './Courses/Courses';
+export { CourseCard } from './Courses/components/CourseCard/CourseCard';
+export { Logo } from './Header/components/Logo/Logo';
+export { SearchBar } from './Courses/components/SearchBar/SearchBar';
+export { Header } from './Header/Header';
+export { Registration } from './Registration/Registration';
+export { Login } from './Login/Login';
+export { CourseInfo } from './CourseInfo/CourseInfo';
+export { NotFound } from './NotFound/NotFound';
+export { PrivateRouter } from './PrivateRouter/PrivateRouter';
+export { ErrorBoundary } from './ErrorBoundary/ErrorBoundary';

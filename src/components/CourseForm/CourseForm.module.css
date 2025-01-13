@@ -1,0 +1,87 @@
+.form {
+	width: 100%;
+	border-radius: 5px;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	gap: 10px;
+}
+
+.form-group button {
+	align-self: center;
+}
+
+.wrapper {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+}
+
+.form-group:first-child {
+	flex-basis: 50%;
+}
+
+.textarea {
+	padding: 4px 8px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 14px;
+}
+
+.form-authors {
+	display: grid;
+	grid-template-columns: 50% 50%;
+	gap: 10px;
+}
+
+.form-fieldset {
+	border: none;
+}
+
+.form-fieldset button {
+	align-self: center;
+}
+
+.form-legend {
+	text-align: center;
+	font-weight: 600;
+	margin-bottom: 15px;
+}
+
+.authors-list {
+	list-style: none;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.authors-item {
+	display: grid;
+	grid-template-columns: 60% 38%;
+	gap: 10px;
+}
+
+.authors-name {
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.duration {
+	font-size: 20px;
+	display: flex;
+	gap: 10px;
+}
+
+.duration span {
+	font-weight: 700;
+}

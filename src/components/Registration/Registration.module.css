@@ -1,0 +1,42 @@
+.wrapper {
+	width: 100%;
+	flex-grow: 1;
+	border-radius: 5px;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.title {
+	font-size: 32px;
+	font-weight: 600;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	min-width: 250px;
+	margin-bottom: 10px;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.form-action {
+	align-self: center;
+}
+
+.note {
+	font-size: 14px;
+}
+
+.wrapper a {
+	color: #3a9fbf;
+}
