@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../store';
 
 import classes from './Courses.module.css';
 
-import { Button } from '../../common';
+import { Button, Loader } from '../../common';
 import { CourseCard, SearchBar } from '..';
 import { BUTTON_TEXT_ADD_COURSE, ROLES } from '../../constants';
 import { pipeDuration, getAuthorsNamesById } from '../../helpers';
@@ -16,10 +16,14 @@ import type { Course } from '../../types/interfaces';
 
 export const Courses: React.FC = () => {
 	const dispatch = useAppDispatch();
-	const coursesList = useSelector(useCourses);
-	const authorsList = useSelector(useAuthors);
-	const { isAuth, role } = useSelector(useUser);
+	const { coursesList, isLoading: isCoursesListLoading } =
+		useSelector(useCourses);
+	const { authorsList, isLoading: isAuthorsListLoading } =
+		useSelector(useAuthors);
+	const { isAuth, role, isLoading: isUserLoading } = useSelector(useUser);
 	const [searchInput, setSearchInput] = useState<string>('');
+	const isLoading =
+		isAuthorsListLoading || isCoursesListLoading || isUserLoading;
 
 	const handleSearchSubmit = (query: string): void => {
 		setSearchInput(query.toLowerCase());
@@ -60,15 +64,21 @@ export const Courses: React.FC = () => {
 
 	return (
 		<section className={classes.courses}>
-			<div className={classes['courses-header']}>
-				<SearchBar onSubmitSearch={handleSearchSubmit} />
-				{isAuth && role === ROLES.ADMIN && (
-					<Link to={`/courses/add`}>
-						<Button buttonText={BUTTON_TEXT_ADD_COURSE} />
-					</Link>
-				)}
-			</div>
-			<div data-testid='courses-container'>{renderedfilteredCourses}</div>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<>
+					<div className={classes['courses-header']}>
+						<SearchBar onSubmitSearch={handleSearchSubmit} />
+						{isAuth && role === ROLES.ADMIN && (
+							<Link to={`/courses/add`}>
+								<Button buttonText={BUTTON_TEXT_ADD_COURSE} />
+							</Link>
+						)}
+					</div>
+					<div data-testid='courses-container'>{renderedfilteredCourses}</div>
+				</>
+			)}
 		</section>
 	);
 };

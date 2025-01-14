@@ -5,13 +5,14 @@ import { useAppDispatch } from '../../store/index';
 
 import classes from './Login.module.css';
 
-import { Input, Button } from '../../common';
+import { Input, Button, Loader } from '../../common';
 import {
 	LABEL_TEXT_EMAIL,
 	LABEL_TEXT_PASSWORD,
 	PLACEHOLDER_TEXT_EMAIL,
 	PLACEHOLDER_TEXT_PASSWORD,
 	BUTTON_TEXT_LOGIN,
+	BUTTON_TEXT_LOGGIN_IN,
 } from '../../constants';
 import { isTextInputValid } from '../../helpers';
 import { useUser } from '../../store/selectors';
@@ -22,7 +23,7 @@ import { API_ENDPOINTS } from '../../constants';
 export const Login: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const { isAuth } = useSelector(useUser);
+	const { isAuth, isLoading } = useSelector(useUser);
 
 	const [userEmail, setUserEmail] = useState<string>('');
 	const [userPassword, setUserPassword] = useState<string>('');
@@ -66,6 +67,7 @@ export const Login: React.FC = () => {
 	return (
 		<section className={classes.wrapper}>
 			<h1 className={classes.title}>Login</h1>
+			{isLoading && <Loader />}
 			<form className={classes.form} onSubmit={handleFormSubmit}>
 				<div className={classes['form-group']}>
 					<Input
@@ -75,6 +77,7 @@ export const Login: React.FC = () => {
 						name='email'
 						id='email'
 						onChange={handleEmailInput}
+						disabled={isLoading}
 					/>
 				</div>
 				<div className={classes['form-group']}>
@@ -85,10 +88,14 @@ export const Login: React.FC = () => {
 						name='password'
 						id='password'
 						onChange={handlePasswordInput}
+						disabled={isLoading}
 					/>
 				</div>
 				<div className={classes['form-action']}>
-					<Button type='submit' buttonText={BUTTON_TEXT_LOGIN} />
+					<Button
+						type='submit'
+						buttonText={isLoading ? BUTTON_TEXT_LOGGIN_IN : BUTTON_TEXT_LOGIN}
+					/>
 				</div>
 			</form>
 			<p className={classes.note}>

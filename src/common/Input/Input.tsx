@@ -8,7 +8,17 @@ export const Input: React.FC<{
 	labelText?: string;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	value?: string;
-}> = ({ labelText, id, onChange, type, placeholderText, name, value }) => (
+	disabled?: boolean;
+}> = ({
+	labelText,
+	id,
+	onChange,
+	type,
+	placeholderText,
+	name,
+	value,
+	disabled = false,
+}) => (
 	<>
 		{labelText && <label htmlFor={id}>{labelText}</label>}
 		<input
@@ -19,6 +29,7 @@ export const Input: React.FC<{
 			name={name}
 			id={id}
 			value={value}
+			disabled={disabled}
 		/>
 	</>
 );

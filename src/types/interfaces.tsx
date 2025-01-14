@@ -7,9 +7,19 @@ export interface Course {
 	authors: string[];
 }
 
+export interface CoursesState {
+	isLoading: boolean;
+	coursesList: Course[];
+}
+
 export interface Author {
 	id: string;
 	name: string;
+}
+
+export interface AuthorsState {
+	isLoading: boolean;
+	authorsList: Author[];
 }
 
 export interface User {
@@ -22,6 +32,7 @@ export interface User {
 
 export interface UserState {
 	isAuth: boolean;
+	isLoading: boolean;
 	name: string;
 	email: string;
 	token: string;

@@ -1,19 +1,28 @@
 import { AnyAction } from 'redux';
 
-import type { Author } from '../../types/interfaces';
-import { GET_AUTHORS, ADD_AUTHOR } from './actionTypes';
+import type { AuthorsState } from '../../types/interfaces';
+import { GET_AUTHORS, ADD_AUTHOR, SET_AUTHOR_ISLOADING } from './actionTypes';
 
-const authorsInitialState: Author[] = [];
+const authorsInitialState: AuthorsState = {
+	isLoading: false,
+	authorsList: [],
+};
 
 export const authorsReducer = (
 	state = authorsInitialState,
 	action: AnyAction
-): Author[] => {
+): AuthorsState => {
 	switch (action.type) {
+		case SET_AUTHOR_ISLOADING:
+			return { ...state, isLoading: true };
 		case GET_AUTHORS:
-			return [...action.payload];
+			return { ...state, isLoading: false, authorsList: [...action.payload] };
 		case ADD_AUTHOR:
-			return [...state, action.payload];
+			return {
+				...state,
+				isLoading: false,
+				authorsList: [...state.authorsList, action.payload],
+			};
 		default:
 			return state;
 	}

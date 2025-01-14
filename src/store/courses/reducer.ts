@@ -6,33 +6,48 @@ import {
 	REMOVE_COURSE,
 	UPDATE_COURSE,
 } from './actionTypes';
-import type { Course } from '../../types/interfaces';
+import type { Course, CoursesState } from '../../types/interfaces';
 
-export const coursesInitialState: Course[] = [];
+export const coursesInitialState: CoursesState = {
+	isLoading: false,
+	coursesList: [],
+};
 
 export const coursesReducer = (
 	state = coursesInitialState,
 	action: AnyAction
-): Course[] => {
+): CoursesState => {
 	switch (action.type) {
 		case GET_COURSES:
-			return [...action.payload];
+			return { ...state, isLoading: false, coursesList: [...action.payload] };
 
 		case CREATE_COURSE:
-			return [...state, action.payload];
+			return {
+				...state,
+				isLoading: false,
+				coursesList: [...state.coursesList, action.payload],
+			};
 
 		case UPDATE_COURSE:
-			const updatedCourseIndex: number = state.findIndex(
+			const updatedCourseIndex: number = state.coursesList.findIndex(
 				(course: Course): boolean => course.id === action.payload.id
 			);
-			return [
-				...state.slice(0, updatedCourseIndex),
-				action.payload,
-				...state.slice(updatedCourseIndex + 1),
-			];
+			return {
+				isLoading: false,
+				coursesList: [
+					...state.coursesList.slice(0, updatedCourseIndex),
+					action.payload,
+					...state.coursesList.slice(updatedCourseIndex + 1),
+				],
+			};
 
 		case REMOVE_COURSE:
-			return state.filter((course) => course.id !== action.payload);
+			return {
+				isLoading: false,
+				coursesList: state.coursesList.filter(
+					(course) => course.id !== action.payload
+				),
+			};
 		default:
 			return state;
 	}

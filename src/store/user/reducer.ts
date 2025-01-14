@@ -1,10 +1,11 @@
 import type { AnyAction } from 'redux';
 
-import { LOGIN, LOGOUT, GET_USER } from './actionTypes';
+import { LOGIN, LOGOUT, GET_USER, SET_USER_ISLOADING } from './actionTypes';
 import type { UserState } from '../../types/interfaces';
 
 const userInitialState: UserState = {
 	isAuth: false,
+	isLoading: false,
 	name: '',
 	email: '',
 	token: '',
@@ -16,6 +17,8 @@ export const userReducer = (
 	action: AnyAction
 ): UserState => {
 	switch (action.type) {
+		case SET_USER_ISLOADING:
+			return { ...state, isLoading: true };
 		case LOGIN:
 			return { isAuth: true, ...action.payload };
 		case LOGOUT:

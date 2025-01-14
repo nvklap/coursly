@@ -4,12 +4,13 @@ import type { ThunkAction } from 'redux-thunk';
 import { RootState } from '../index';
 import { getList, addAuthorRequest } from '../../services';
 import { Author } from '../../types/interfaces';
-import { getAuthors, addAuthor } from './actionCreators';
+import { getAuthors, addAuthor, setAuthorIsLoading } from './actionCreators';
 import { API_ENDPOINTS } from '../../constants';
 
 export const getAuthorsThunk =
 	(): ThunkAction<void, RootState, unknown, AnyAction> =>
 	async (dispatch: Dispatch): Promise<void> => {
+		dispatch(setAuthorIsLoading());
 		const result = await getList<Author>(API_ENDPOINTS.AUTHORS);
 		if (result) {
 			dispatch(getAuthors(result));
@@ -22,6 +23,7 @@ export const addAuthorThunk =
 		token: string
 	): ThunkAction<void, RootState, unknown, AnyAction> =>
 	async (dispatch: Dispatch): Promise<void> => {
+		dispatch(setAuthorIsLoading());
 		const response = await addAuthorRequest(author, token);
 
 		if (response.successful) {

@@ -14,12 +14,14 @@ import {
 	createCourse,
 	updateCourse,
 	removeCourse,
+	setCoursesListIsLoading,
 } from './actionCreators';
 import { API_ENDPOINTS } from '../../constants';
 
 export const getCoursesThunk =
 	(): ThunkAction<void, RootState, unknown, AnyAction> =>
 	async (dispatch: Dispatch): Promise<void> => {
+		dispatch(setCoursesListIsLoading());
 		const result = await getList<Course>(API_ENDPOINTS.COURSE);
 		if (result) {
 			dispatch(getCourses(result));
@@ -32,6 +34,7 @@ export const createCourseThunk =
 		token: string
 	): ThunkAction<void, RootState, unknown, AnyAction> =>
 	async (dispatch: Dispatch): Promise<void> => {
+		dispatch(setCoursesListIsLoading());
 		const response = await createCourseRequest(course, token);
 
 		if (response.successful) {
@@ -46,6 +49,7 @@ export const updateCourseThunk =
 		id: string
 	): ThunkAction<void, RootState, unknown, AnyAction> =>
 	async (dispatch: Dispatch): Promise<void> => {
+		dispatch(setCoursesListIsLoading());
 		const response = await updateCourseRequest(course, token, id);
 
 		if (response.successful) {
@@ -59,6 +63,7 @@ export const removeCourseThunk =
 		token: string
 	): ThunkAction<void, RootState, unknown, AnyAction> =>
 	async (dispatch: Dispatch): Promise<void> => {
+		dispatch(setCoursesListIsLoading());
 		const response = await removeCourseRequest(id, token);
 
 		if (response.successful) {

@@ -20,7 +20,7 @@ import {
 	BUTTON_TEXT_UPDATE_COURSE,
 	BUTTON_TEXT_CREATE_COURSE,
 } from '../../constants';
-import { Button, Input } from '../../common';
+import { Button, Input, Loader } from '../../common';
 import { AuthorsList } from '..';
 import { isTextInputValid, pipeDuration } from '../../helpers';
 import { useAuthors, useCourses } from '../../store/selectors';
@@ -37,8 +37,10 @@ export const CourseForm: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const { courseId } = useParams();
 	const token = localStorage.getItem('userToken');
-	const coursesList = useSelector(useCourses);
-	const authorsListStore = useSelector(useAuthors);
+	const { coursesList, isLoading: isCoursesListLoading } =
+		useSelector(useCourses);
+	const { authorsList: authorsListStore, isLoading: isAuthorsListLoading } =
+		useSelector(useAuthors);
 	const updatedCourse = coursesList.find(({ id }) => id === courseId);
 
 	const [authorsList, setAuthorsList] = useState<Author[]>([]);
@@ -180,6 +182,10 @@ export const CourseForm: React.FC = () => {
 			alert('Please, fill in all fields');
 		}
 	};
+
+	if (isAuthorsListLoading || isCoursesListLoading) {
+		return <Loader />;
+	}
 
 	return (
 		<form className={classes.form} onSubmit={handleFormSubmit}>

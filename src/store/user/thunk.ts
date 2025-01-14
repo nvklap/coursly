@@ -4,7 +4,7 @@ import type { ThunkAction } from 'redux-thunk';
 import { RootState } from '../index';
 import type { User } from '../../types/interfaces';
 import { auth, logoutUser, fetchUser } from '../../services';
-import { login, logout, getUser } from './actionCreators';
+import { login, logout, getUser, setUserIsLoading } from './actionCreators';
 import { ROLES } from '../../constants';
 
 export const loginThunk =
@@ -13,6 +13,7 @@ export const loginThunk =
 		userData: User
 	): ThunkAction<void, RootState, unknown, AnyAction> =>
 	async (dispatch: Dispatch): Promise<void> => {
+		dispatch(setUserIsLoading());
 		const result = await auth(url, userData);
 
 		if (result && result.user && result.successful) {
@@ -31,6 +32,7 @@ export const loginThunk =
 export const logoutThunk =
 	(token: string): ThunkAction<void, RootState, unknown, AnyAction> =>
 	(dispatch: Dispatch): void => {
+		dispatch(setUserIsLoading());
 		logoutUser(token);
 
 		localStorage.removeItem('userToken');
@@ -40,6 +42,7 @@ export const logoutThunk =
 export const getUserThunk =
 	(token: string): ThunkAction<void, RootState, unknown, AnyAction> =>
 	async (dispatch: Dispatch): Promise<void> => {
+		dispatch(setUserIsLoading());
 		const response = await fetchUser(token);
 		if (response.result) {
 			localStorage.setItem('userName', `${response.result.name}`);

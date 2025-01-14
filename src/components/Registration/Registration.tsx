@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
 
 import classes from './Registration.module.css';
 
-import { Input, Button } from '../../common';
+import { Input, Button, Loader } from '../../common';
 import {
 	LABEL_TEXT_NAME,
 	LABEL_TEXT_EMAIL,
@@ -12,15 +13,18 @@ import {
 	PLACEHOLDER_TEXT_EMAIL,
 	PLACEHOLDER_TEXT_PASSWORD,
 	BUTTON_TEXT_REGISTRATION,
+	BUTTON_TEXT_CREATING_USER,
 } from '../../constants';
 import { isTextInputValid } from '../../helpers';
 import { auth } from '../../services';
 import type { AuthResponse, User } from '../../types/interfaces';
 import { API_ENDPOINTS } from '../../constants';
+// import { useUser } from '../../store/selectors';
 
 export const Registration: React.FC = () => {
 	const navigate = useNavigate();
-
+	// const { isLoading } = useSelector(useUser);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [userName, setUserName] = useState<string>('');
 	const [userEmail, setUserEmail] = useState<string>('');
 	const [userPassword, setUserPassword] = useState<string>('');
@@ -58,11 +62,13 @@ export const Registration: React.FC = () => {
 				email: userEmail,
 			};
 
+			setIsLoading(true);
+
 			const result: AuthResponse | undefined = await auth(
 				API_ENDPOINTS.REGISTRATION,
 				newUser
 			);
-
+			setIsLoading(false);
 			result?.successful ? navigate('/login') : alert(result?.error);
 		} else {
 			alert('Please, fill in all fields');
@@ -72,6 +78,7 @@ export const Registration: React.FC = () => {
 	return (
 		<section className={classes.wrapper}>
 			<h1 className={classes.title}>Registration</h1>
+			{isLoading && <Loader />}
 			<form className={classes.form} onSubmit={handleFormSubmit}>
 				<div className={classes['form-group']}>
 					<Input
@@ -81,6 +88,7 @@ export const Registration: React.FC = () => {
 						name='name'
 						id='name'
 						onChange={handleNameInput}
+						disabled={isLoading}
 					/>
 				</div>
 				<div className={classes['form-group']}>
@@ -91,6 +99,7 @@ export const Registration: React.FC = () => {
 						name='email'
 						id='email'
 						onChange={handleEmailInput}
+						disabled={isLoading}
 					/>
 				</div>
 				<div className={classes['form-group']}>
@@ -101,10 +110,16 @@ export const Registration: React.FC = () => {
 						name='password'
 						id='password'
 						onChange={handlePasswordInput}
+						disabled={isLoading}
 					/>
 				</div>
 				<div className={classes['form-action']}>
-					<Button type='submit' buttonText={BUTTON_TEXT_REGISTRATION} />
+					<Button
+						type='submit'
+						buttonText={
+							isLoading ? BUTTON_TEXT_CREATING_USER : BUTTON_TEXT_REGISTRATION
+						}
+					/>
 				</div>
 			</form>
 			<p className={classes.note}>

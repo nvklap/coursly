@@ -10,11 +10,14 @@ import { useAuthors } from '../../store/selectors';
 import { getAuthorsThunk } from '../../store/authors/thunk';
 import { getCourse } from '../../services';
 import type { Course } from '../../types/interfaces';
+import { Loader } from '../../common';
 
 export const CourseInfo: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const [course, setCourse] = useState<Course>();
-	const authorsList = useSelector(useAuthors);
+	const [isLoading, setCourseIsLoading] = useState<boolean>(false);
+	const { authorsList, isLoading: isAuthorsListLoading } =
+		useSelector(useAuthors);
 	const { courseId } = useParams<string>();
 
 	useEffect(() => {
@@ -25,7 +28,9 @@ export const CourseInfo: React.FC = () => {
 
 	useEffect(() => {
 		if (courseId) {
+			setCourseIsLoading(true);
 			getCourse(courseId).then((data) => {
+				setCourseIsLoading(false);
 				if (data.successful) {
 					setCourse(data.result);
 				}
@@ -73,9 +78,12 @@ export const CourseInfo: React.FC = () => {
 		return <p>No course found...</p>;
 	}, [authorsList, course]);
 
+	if (isLoading || isAuthorsListLoading) return <Loader />;
+
 	return (
 		<section className={classes['course-wrapper']}>
 			<Link to='/courses'> &lt; Back to courses</Link>
+
 			{renderedCourseInfo}
 		</section>
 	);

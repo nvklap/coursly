@@ -3,6 +3,7 @@ import {
 	CREATE_COURSE,
 	REMOVE_COURSE,
 	UPDATE_COURSE,
+	SET_COURSESLIST_ISLOADING,
 } from './actionTypes';
 import type { Course } from '../../types/interfaces';
 
@@ -26,4 +27,8 @@ export const updateCourse = (
 	course: Course
 ): { type: string; payload: Course } => {
 	return { type: UPDATE_COURSE, payload: course };
+};
+
+export const setCoursesListIsLoading = (): { type: string } => {
+	return { type: SET_COURSESLIST_ISLOADING };
 };

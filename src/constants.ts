@@ -23,6 +23,8 @@ export const BUTTON_TEXT_ADD_AUTHOR = 'Add author';
 export const BUTTON_TEXT_REMOVE_AUTHOR = 'Delete author';
 export const BUTTON_TEXT_REGISTRATION = 'Registration';
 export const BUTTON_TEXT_LOGIN = 'Login';
+export const BUTTON_TEXT_LOGGIN_IN = 'Logging in...';
+export const BUTTON_TEXT_CREATING_USER = 'Creating new account...';
 
 export const PLACEHOLDER_TEXT_SEARCH = 'Enter course name...';
 export const PLACEHOLDER_TEXT_TITLE = 'Enter title...';
