@@ -16,7 +16,7 @@ describe('CourseCard component', () => {
 		[Symbol.observable]: jest.fn(),
 	};
 
-	const authorsList = mockedStore.getState().authors;
+	const { authorsList } = mockedStore.getState().authors;
 	const { id, title, description, authors, duration, creationDate } =
 		mockedCourse;
 

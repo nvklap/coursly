@@ -23,12 +23,12 @@ describe('course reducer', () => {
 	});
 
 	test('should handle SAVE_COURSE and return new state', () => {
-		const prevState = mockedCoursesList;
+		const prevState = { isLoading: false, coursesList: mockedCoursesList };
 
-		expect(reducer(prevState, createCourse(course))).toEqual([
+		expect(reducer(prevState, createCourse(course))).toEqual({
 			...prevState,
-			course,
-		]);
+			coursesList: [...mockedCoursesList, course],
+		});
 	});
 
 	test('should handle GET_COURSES and return new state', async () => {
@@ -42,10 +42,10 @@ describe('course reducer', () => {
 		const result = await getList<Course>('courses');
 
 		if (result) {
-			expect(reducer(coursesInitialState, getCourses(result))).toEqual([
+			expect(reducer(coursesInitialState, getCourses(result))).toEqual({
 				...coursesInitialState,
-				...mockedCoursesList,
-			]);
+				coursesList: [...mockedCoursesList],
+			});
 		}
 		expect(fetch).toHaveBeenCalledTimes(1);
 	});

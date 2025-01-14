@@ -19,7 +19,7 @@ describe('CourseForm component', () => {
 		replaceReducer: jest.fn(),
 		[Symbol.observable]: jest.fn(),
 	};
-	const authors = mockedStore.getState().authors;
+	const { authorsList: authors } = mockedStore.getState().authors;
 	beforeEach(() => {
 		render(
 			<Provider store={mockedStore}>

@@ -68,20 +68,13 @@ export const mockedCourse = {
 };
 
 export const mockedState = {
-	user: {
-		isAuth: true,
-		name: 'Test Name',
-		role: 'admin',
-	},
-	courses: mockedCoursesList,
-	authors: mockedAuthorsList,
+	user: { isLoading: false, isAuth: true, name: 'Test Name', role: 'admin' },
+	courses: { isLoading: false, coursesList: mockedCoursesList },
+	authors: { isLoading: false, authorsList: mockedAuthorsList },
 };
 
 export const mockedEmptyState = {
-	user: {
-		isAuth: true,
-		name: 'Test Name',
-	},
-	courses: [],
-	authors: mockedAuthorsList,
+	user: { isLoading: false, isAuth: true, name: 'Test Name' },
+	courses: { isLoading: false, coursesList: [] },
+	authors: { isLoading: false, authorsList: mockedAuthorsList },
 };

@@ -25,7 +25,7 @@ describe('Course component', () => {
 		[Symbol.observable]: jest.fn(),
 	};
 
-	const courses = mockedStore.getState().courses;
+	const { coursesList: courses } = mockedStore.getState().courses;
 
 	const createTree = (data: StoreMocked) =>
 		render(

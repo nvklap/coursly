@@ -1,22 +1,24 @@
 export interface StoreMocked {
 	getState: () => {
-		user: {
-			isAuth: boolean;
-			name: string;
-			role?: string;
-		};
+		user: { isLoading: boolean; isAuth: boolean; name: string; role?: string };
 		courses: {
-			id: string;
-			title: string;
-			description: string;
-			creationDate: string;
-			duration: number;
-			authors: string[];
-		}[];
+			isLoading: boolean;
+			coursesList: {
+				id: string;
+				title: string;
+				description: string;
+				creationDate: string;
+				duration: number;
+				authors: string[];
+			}[];
+		};
 		authors: {
-			id: string;
-			name: string;
-		}[];
+			isLoading: boolean;
+			authorsList: {
+				id: string;
+				name: string;
+			}[];
+		};
 	};
 	subscribe: jest.Mock<any, any, any>;
 	dispatch: jest.Mock<any, any, any>;
